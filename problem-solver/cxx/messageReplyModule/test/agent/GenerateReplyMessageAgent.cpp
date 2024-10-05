@@ -22,17 +22,17 @@ SC_AGENT_IMPLEMENTATION(GenerateReplyMessageAgent)
     utils::AgentUtils::finishAgentWork(&m_memoryCtx, actionAddr, false);
   }
 
-  ScAddr argsSet = utils::IteratorUtils::getFirstByOutRelation(
+  ScAddr argsSet = utils::IteratorUtils::getAnyByOutRelation(
         & m_memoryCtx,
         actionAddr,
         scAgentsCommon::CoreKeynodes::rrel_2);
-  ScAddr messageAddr = utils::IteratorUtils::getFirstByOutRelation(
+  ScAddr messageAddr = utils::IteratorUtils::getAnyByOutRelation(
         & m_memoryCtx,
         argsSet,
         scAgentsCommon::CoreKeynodes::rrel_1);
 
   ScTemplate scTemplate;
-  scTemplate.TripleWithRelation(
+  scTemplate.Quintuple(
       messageAddr,
       ScType::EdgeDCommonVar,
       ScType::NodeVar,
@@ -49,19 +49,19 @@ SC_AGENT_IMPLEMENTATION(GenerateReplyMessageAgent)
 bool GenerateReplyMessageAgent::actionIsValid(const ScAddr & actionAddr)
 {
   ScTemplate scTemplate;
-  scTemplate.TripleWithRelation(
+  scTemplate.Quintuple(
         actionAddr,
         ScType::EdgeAccessVarPosPerm,
         messageReplyModule::MessageReplyKeynodes::message_processing_program,
         ScType::EdgeAccessVarPosPerm,
         scAgentsCommon::CoreKeynodes::rrel_1);
-  scTemplate.TripleWithRelation(
+  scTemplate.Quintuple(
         actionAddr,
         ScType::EdgeAccessVarPosPerm,
         ScType::NodeVar >> "_args_set",
         ScType::EdgeAccessVarPosPerm,
         scAgentsCommon::CoreKeynodes::rrel_2);
-  scTemplate.TripleWithRelation(
+  scTemplate.Quintuple(
         "_args_set",
         ScType::EdgeAccessVarPosPerm,
         ScType::NodeVar >> "_message",

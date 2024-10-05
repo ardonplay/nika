@@ -29,12 +29,12 @@ void initializeClasses()
   Keynodes::InitGlobal();
 }
 
-void checkLinkContent(ScMemoryContext & ctx, ScAddr action, const string& resultPhrase)
+void checkLinkContent(ScMemoryContext & ctx, ScAddr action, const std::string& resultPhrase)
 {
   ScTemplate scTemplate;
   ScTemplateSearchResult result;
   const std::string LINK_ALIAS = "_link";
-  scTemplate.TripleWithRelation(
+  scTemplate.Quintuple(
         action,
         ScType::EdgeDCommonVar,
         ScType::LinkVar >> LINK_ALIAS,
@@ -44,8 +44,10 @@ void checkLinkContent(ScMemoryContext & ctx, ScAddr action, const string& result
   EXPECT_TRUE(ctx.HelperSearchTemplate(scTemplate, result));
 
   ScAddr link = result[0][LINK_ALIAS];
-
-  EXPECT_EQ(utils::CommonUtils::getLinkContent(&ctx, link), resultPhrase);
+  
+  std::string content;
+  ctx.GetLinkContent(link, content);
+  EXPECT_EQ(content, resultPhrase);
 }
 
 TEST_F(PhraseGenerationTest, ActionDoesNotHaveALinkTemplate)
@@ -76,7 +78,7 @@ TEST_F(PhraseGenerationTest, ActionDoesNotHaveALinkTemplate)
 
 TEST_F(PhraseGenerationTest, TestIsCorrect)
 {
-  string resultPhrase = "Sorry, Guilderoy Lockhart.";
+  std::string resultPhrase = "Sorry, Guilderoy Lockhart.";
 
   ScMemoryContext & ctx = *m_ctx;
 
@@ -106,7 +108,7 @@ TEST_F(PhraseGenerationTest, TestIsCorrect)
 
 TEST_F(PhraseGenerationTest, TestIsCorrect2)
 {
-  string resultPhrase = "Mariya Ivanova is the mother of Ivan Ivanov.";
+  std::string resultPhrase = "Mariya Ivanova is the mother of Ivan Ivanov.";
 
   ScMemoryContext & ctx = *m_ctx;
 
@@ -136,7 +138,7 @@ TEST_F(PhraseGenerationTest, TestIsCorrect2)
 
 TEST_F(PhraseGenerationTest, TestIsCorrect3)
 {
-  string resultPhrase = "Ivan Ivanov is the brother of Pavel Ivanov.";
+  std::string resultPhrase = "Ivan Ivanov is the brother of Pavel Ivanov.";
 
   ScMemoryContext & ctx = *m_ctx;
 
@@ -166,7 +168,7 @@ TEST_F(PhraseGenerationTest, TestIsCorrect3)
 
 TEST_F(PhraseGenerationTest, TestTemplateHasNoVariables)
 {
-  string resultPhrase = "Sorry.";
+  std::string resultPhrase = "Sorry.";
 
   ScMemoryContext & ctx = *m_ctx;
 
@@ -247,7 +249,7 @@ TEST_F(PhraseGenerationTest, GeneratedLinkDoesNotHaveALanguageNode)
   ScTemplate scTemplate;
   ScTemplateSearchResult result;
   const std::string LINK_ALIAS = "_link";
-  scTemplate.TripleWithRelation(
+  scTemplate.Quintuple(
         testQuestionNode,
         ScType::EdgeDCommonVar,
         ScType::LinkVar >> LINK_ALIAS,
@@ -266,7 +268,7 @@ TEST_F(PhraseGenerationTest, GeneratedLinkDoesNotHaveALanguageNode)
 
 TEST_F(PhraseGenerationTest, QuestionDoesNotHaveAnyParameters)
 {
-  string resultPhrase = "Sorry, Guilderoy Lockhart.";
+  std::string resultPhrase = "Sorry, Guilderoy Lockhart.";
 
   ScMemoryContext & ctx = *m_ctx;
 
@@ -294,7 +296,7 @@ TEST_F(PhraseGenerationTest, QuestionDoesNotHaveAnyParameters)
 
 TEST_F(PhraseGenerationTest, ParameterNodeIsEmpty)
 {
-  string resultPhrase = "Sorry, Guilderoy Lockhart.";
+  std::string resultPhrase = "Sorry, Guilderoy Lockhart.";
 
   ScMemoryContext & ctx = *m_ctx;
 

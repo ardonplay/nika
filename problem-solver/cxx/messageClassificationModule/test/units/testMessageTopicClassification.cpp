@@ -117,7 +117,7 @@ TEST_F(MessageTopicClassificationTest, classifyMessageWithEntityTest)
 
   ScTemplate classificationTemplate;
   classificationTemplate.Triple(greetingMessageClass, ScType::EdgeAccessVarPosPerm, messageAddr);
-  classificationTemplate.TripleWithRelation(
+  classificationTemplate.Quintuple(
       messageAddr, ScType::EdgeAccessVarPosPerm, entityAddr, ScType::EdgeAccessVarPosPerm, entityRoleAddr);
 
   ScTemplateSearchResult classificationTemplateResult;
@@ -173,9 +173,9 @@ TEST_F(MessageTopicClassificationTest, classifyMessageWithTwoEntitiesTest)
   ScTemplate classificationTemplate;
   classificationTemplate.Triple(weatherMessageClass, ScType::EdgeAccessVarPosPerm, messageAddr);
   classificationTemplate.Triple(neutralMessageClass, ScType::EdgeAccessVarPosPerm, messageAddr);
-  classificationTemplate.TripleWithRelation(
+  classificationTemplate.Quintuple(
       messageAddr, ScType::EdgeAccessVarPosPerm, entityContactAddr, ScType::EdgeAccessVarPosPerm, rrelContactAddr);
-  classificationTemplate.TripleWithRelation(
+  classificationTemplate.Quintuple(
       messageAddr, ScType::EdgeAccessVarPosPerm, entitySeasonAddr, ScType::EdgeAccessVarPosPerm, rrelSeasonAddr);
 
   ScTemplateSearchResult classificationTemplateResult;
@@ -229,9 +229,9 @@ TEST_F(MessageTopicClassificationTest, classifyMessageWithTwoEntitiesSameRoleTes
   EXPECT_FALSE(messageClassificationItems.empty());
 
   ScTemplate entitiesTemplate;
-  entitiesTemplate.TripleWithRelation(
+  entitiesTemplate.Quintuple(
       messageAddr, ScType::EdgeAccessVarPosPerm, hobbyAddr, ScType::EdgeAccessVarPosPerm, rrelEntityAddr);
-  entitiesTemplate.TripleWithRelation(
+  entitiesTemplate.Quintuple(
       messageAddr, ScType::EdgeAccessVarPosPerm, theatreAddr, ScType::EdgeAccessVarPosPerm, rrelEntityAddr);
 
   ScTemplateSearchResult classificationTemplateResult;

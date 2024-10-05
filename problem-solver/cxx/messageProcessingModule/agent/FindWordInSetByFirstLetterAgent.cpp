@@ -150,7 +150,9 @@ std::string FindWordInSetByFirstLetterAgent::getMessageText(ScAddr const & messa
   {
     SC_THROW_EXCEPTION(utils::ExceptionItemNotFound, "FindWordInSetByFirstLetterAgent: message link is not found.");
   }
-  return utils::CommonUtils::getLinkContent(&m_memoryCtx, messageLink);
+  std::string message;
+  m_memoryCtx.GetLinkContent(messageLink);
+  return message;
 }
 
 }  // namespace messageProcessingModule

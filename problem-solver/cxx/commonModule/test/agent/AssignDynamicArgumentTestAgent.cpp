@@ -14,9 +14,9 @@ SC_AGENT_IMPLEMENTATION(AssignDynamicArgumentTestAgent)
     return SC_RESULT_ERROR;
   }
 
-  ScAddr actionAddr = ms_context->GetEdgeTarget(edgeAddr);
+  ScAddr actionAddr = m_memoryCtx.GetEdgeTarget(edgeAddr);
 
-  ScIterator3Ptr iterator3Ptr = ms_context->Iterator3(
+  ScIterator3Ptr iterator3Ptr = m_memoryCtx.Iterator3(
         TestKeynodes::assign_dynamic_argument_test_action,
         ScType::EdgeAccessConstPosPerm,
         actionAddr);
@@ -25,7 +25,7 @@ SC_AGENT_IMPLEMENTATION(AssignDynamicArgumentTestAgent)
     return SC_RESULT_OK;
   }
 
-  ScAddr dynamicArgument = utils::IteratorUtils::getFirstByOutRelation(
+  ScAddr dynamicArgument = utils::IteratorUtils::getAnyByOutRelation(
         &m_memoryCtx,
         actionAddr,
         scAgentsCommon::CoreKeynodes::rrel_1);

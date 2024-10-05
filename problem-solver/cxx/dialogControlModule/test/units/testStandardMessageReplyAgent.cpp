@@ -75,12 +75,14 @@ TEST_F(StandardMessageReplyTest, ProcessingAtomicMessageIsSuccessful)
   ScAddr messageNode = ctx.HelperFindBySystemIdtf("test_message");
   EXPECT_TRUE(messageNode.IsValid());
 
-  ScAddr replyMessageNode = utils::IteratorUtils::getFirstByOutRelation(&ctx, messageNode, MessageKeynodes::nrel_reply);
+  ScAddr replyMessageNode = utils::IteratorUtils::getAnyByOutRelation(&ctx, messageNode, MessageKeynodes::nrel_reply);
   EXPECT_TRUE(replyMessageNode.IsValid());
 
   TokenDomainSearcher searcher(&ctx);
   ScAddr messageLink = searcher.getMessageText(replyMessageNode);
-  EXPECT_EQ(utils::CommonUtils::getLinkContent(&ctx, messageLink), messageText);
+  std::string content;
+  ctx.GetLinkContent(messageLink, content);
+  EXPECT_EQ(content, messageText);
 }
 
 TEST_F(StandardMessageReplyTest, ProcessingNonatomicMessageIsSuccessful)
@@ -123,12 +125,14 @@ TEST_F(StandardMessageReplyTest, ProcessingNonatomicMessageIsSuccessful)
   ScAddr messageNode = ctx.HelperFindBySystemIdtf("test_message");
   EXPECT_TRUE(messageNode.IsValid());
 
-  ScAddr replyMessageNode = utils::IteratorUtils::getFirstByOutRelation(&ctx, messageNode, MessageKeynodes::nrel_reply);
+  ScAddr replyMessageNode = utils::IteratorUtils::getAnyByOutRelation(&ctx, messageNode, MessageKeynodes::nrel_reply);
   EXPECT_TRUE(replyMessageNode.IsValid());
 
   TokenDomainSearcher searcher(&ctx);
   ScAddr messageLink = searcher.getMessageText(replyMessageNode);
-  EXPECT_EQ(utils::CommonUtils::getLinkContent(&ctx, messageLink), messageText);
+  std::string content;
+  ctx.GetLinkContent(messageLink, content);
+  EXPECT_EQ(content, messageText);
 }
 
 TEST_F(StandardMessageReplyTest, ActionDoesntHaveAMessageNode)

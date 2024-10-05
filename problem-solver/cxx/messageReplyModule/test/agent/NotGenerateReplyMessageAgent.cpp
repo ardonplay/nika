@@ -8,7 +8,7 @@ using namespace messageReplyModuleTest;
 
 SC_AGENT_IMPLEMENTATION(NotGenerateReplyMessageAgent)
 {
-  ScAddr actionAddr = ms_context->GetEdgeTarget(edgeAddr);
+  ScAddr actionAddr = m_memoryCtx.GetEdgeTarget(edgeAddr);
   if(!m_memoryCtx.HelperCheckEdge(
         commonModule::Keynodes::action_interpret_non_atomic_action, actionAddr, ScType::EdgeAccessConstPosPerm))
   {

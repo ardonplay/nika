@@ -72,7 +72,9 @@ SC_AGENT_IMPLEMENTATION(StandardMessageReplyAgent)
   delete messageHandler;
 
   SC_LOG_DEBUG("StandardMessageReplyAgent finished");
-  AgentUtils::finishAgentWork(&m_memoryCtx, actionNode, replyMessageNode, true);
+  ScAddr edgeToAnswer = m_memoryCtx.CreateEdge(ScType::EdgeDCommonConst, actionNode, replyMessageNode);
+  m_memoryCtx.CreateEdge(ScType::EdgeAccessConstPosPerm, scAgentsCommon::CoreKeynodes::nrel_answer, edgeToAnswer);
+  AgentUtils::finishAgentWork(&m_memoryCtx, actionNode, true);
   return SC_RESULT_OK;
 }
 
@@ -90,7 +92,7 @@ ScAddr StandardMessageReplyAgent::generateReplyMessage(const ScAddr & messageNod
       MessageKeynodes::concept_answer_on_standard_message_rule_class_by_priority,
       wrapInSet(messageNode)};
   ScAddr actionDirectInference =
-      utils::AgentUtils::initAgent(&m_memoryCtx, inference::InferenceKeynodes::action_direct_inference, argsVector);
+      utils::AgentUtils::initAction(&m_memoryCtx, inference::InferenceKeynodes::action_direct_inference, argsVector);
 
   bool const result = ActionUtils::waitAction(&m_memoryCtx, actionDirectInference, DIRECT_INFERENCE_AGENT_WAIT_TIME);
   if (result)

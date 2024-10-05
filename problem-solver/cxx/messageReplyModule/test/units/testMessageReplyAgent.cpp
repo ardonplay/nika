@@ -39,13 +39,13 @@ bool generatedMessageIsValid(ScMemoryContext * context, ScAddr const & soundLink
       messageReplyModule::MessageReplyKeynodes::concept_message,
       ScType::EdgeAccessVarPosPerm,
       ScType::NodeVar >> "_user_message");
-  scTemplate.TripleWithRelation(
+  scTemplate.Quintuple(
       "_user_message",
       ScType::EdgeDCommonVar,
       ScType::NodeVar,
       ScType::EdgeAccessVarPosPerm,
       messageReplyModule::MessageReplyKeynodes::nrel_authors);
-  scTemplate.TripleWithRelation(
+  scTemplate.Quintuple(
       ScType::NodeVar >> "_translation_node",
       ScType::EdgeDCommonVar,
       "_user_message",
@@ -84,7 +84,7 @@ TEST_F(MessageReplyAgentTest, messageProcessingWithTextLinkSuccessful)
           test_action_node,
           ScType::EdgeAccessConstPosPerm));
 
-  EXPECT_TRUE(generatedMessageIsValid(&context, utils::IteratorUtils::getFirstByOutRelation(
+  EXPECT_TRUE(generatedMessageIsValid(&context, utils::IteratorUtils::getAnyByOutRelation(
           &context,
           test_action_node,
           scAgentsCommon::CoreKeynodes::rrel_1)));
@@ -117,7 +117,7 @@ TEST_F(MessageReplyAgentTest, messageProcessingWithSoundLinkSuccessful)
           test_action_node,
           ScType::EdgeAccessConstPosPerm));
 
-  EXPECT_TRUE(generatedMessageIsValid(&context, utils::IteratorUtils::getFirstByOutRelation(
+  EXPECT_TRUE(generatedMessageIsValid(&context, utils::IteratorUtils::getAnyByOutRelation(
           &context,
           test_action_node,
           scAgentsCommon::CoreKeynodes::rrel_1)));

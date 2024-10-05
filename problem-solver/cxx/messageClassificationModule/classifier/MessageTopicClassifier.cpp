@@ -48,7 +48,9 @@ std::string MessageTopicClassifier::getMessageText(ScAddr const & messageAddr)
   {
     SC_THROW_EXCEPTION(utils::ExceptionItemNotFound, "MessageTopicClassifier: Message link is not found.");
   }
-  return utils::CommonUtils::getLinkContent(context, messageLink);
+  std::string message;
+  context->GetLinkContent(messageLink, message);
+  return message;
 }
 
 ScAddrVector MessageTopicClassifier::getMessageIntentClass(ScAddr const & messageAddr, json const & witResponse)
@@ -119,7 +121,9 @@ std::vector<std::string> MessageTopicClassifier::getWitAiIdtfs(ScAddr const & me
   std::vector<std::string> witAiIdtfs;
   for (ScAddr const & witAiIdtfAddr : witAiIdtfAddrs)
   {
-    witAiIdtfs.push_back(utils::CommonUtils::getLinkContent(context, witAiIdtfAddr));
+    std::string witAiIdtf;
+    context->GetLinkContent(witAiIdtfAddr, witAiIdtf);
+    witAiIdtfs.push_back(witAiIdtf);
   }
 
   return witAiIdtfs;
@@ -169,19 +173,19 @@ json MessageTopicClassifier::getMessageTrait(json const & witResponse)
 
 void MessageTopicClassifier::buildTraitTemplate(ScTemplate & traitTemplate, ScAddr const & possibleMessageCLass)
 {
-  traitTemplate.TripleWithRelation(
+  traitTemplate.Quintuple(
       possibleMessageCLass,
       ScType::EdgeDCommonVar,
       ScType::LinkVar >> MessageClassificationAliasConstants::TRAIT_INCLUDED_CLASS_LINK_ALIAS,
       ScType::EdgeAccessVarPosPerm,
       MessageClassificationKeynodes::nrel_wit_ai_idtf);
-  traitTemplate.TripleWithRelation(
+  traitTemplate.Quintuple(
       ScType::NodeVarClass >> MessageClassificationAliasConstants::SET_OF_TRAITS_CLASS_ALIAS,
       ScType::EdgeDCommonVar,
       possibleMessageCLass,
       ScType::EdgeAccessVarPosPerm,
       scAgentsCommon::CoreKeynodes::nrel_inclusion);
-  traitTemplate.TripleWithRelation(
+  traitTemplate.Quintuple(
       MessageClassificationAliasConstants::SET_OF_TRAITS_CLASS_ALIAS,
       ScType::EdgeDCommonVar,
       ScType::LinkVar >> MessageClassificationAliasConstants::SET_OF_TRAITS_CLASS_LINK_ALIAS,
@@ -217,8 +221,8 @@ ScAddrVector MessageTopicClassifier::processTraits(
           traitTemplateResult[0][MessageClassificationAliasConstants::SET_OF_TRAITS_CLASS_LINK_ALIAS];
       ScAddr traitLink = traitTemplateResult[0][MessageClassificationAliasConstants::TRAIT_INCLUDED_CLASS_LINK_ALIAS];
 
-      traitWitIdtf = utils::CommonUtils::getLinkContent(context, traitLink);
-      setOfTraitsWitIdtf = utils::CommonUtils::getLinkContent(context, setOfTraitsLink);
+      context->GetLinkContent(traitLink, traitWitIdtf);
+      context->GetLinkContent(setOfTraitsLink, setOfTraitsWitIdtf);
       traitClassIdtf = messageTrait.at(setOfTraitsWitIdtf).at(0).at(WitAiConstants::VALUE);
 
       if (traitClassIdtf == traitWitIdtf)
@@ -273,13 +277,13 @@ json MessageTopicClassifier::getMessageEntities(json const & witResponse)
 
 void MessageTopicClassifier::buildEntityTemplate(ScTemplate & entityTemplate, ScAddr const & possibleEntityClass)
 {
-  entityTemplate.TripleWithRelation(
+  entityTemplate.Quintuple(
       possibleEntityClass,
       ScType::EdgeDCommonVar,
       ScType::LinkVar >> MessageClassificationAliasConstants::ENTITY_CLASS_LINK_ALIAS,
       ScType::EdgeAccessVarPosPerm,
       MessageClassificationKeynodes::nrel_wit_ai_idtf);
-  entityTemplate.TripleWithRelation(
+  entityTemplate.Quintuple(
       possibleEntityClass,
       ScType::EdgeDCommonVar,
       ScType::NodeVar >> MessageClassificationAliasConstants::ENTITY_SET_ALIAS,
@@ -289,7 +293,7 @@ void MessageTopicClassifier::buildEntityTemplate(ScTemplate & entityTemplate, Sc
       MessageClassificationAliasConstants::ENTITY_SET_ALIAS,
       ScType::EdgeAccessVarPosPerm,
       ScType::NodeVarRole >> MessageClassificationAliasConstants::ENTITY_ROLE_ALIAS);
-  entityTemplate.TripleWithRelation(
+  entityTemplate.Quintuple(
       MessageClassificationAliasConstants::ENTITY_ROLE_ALIAS,
       ScType::EdgeDCommonVar,
       ScType::LinkVar >> MessageClassificationAliasConstants::ENTITY_ROLE_LINK_ALIAS,
@@ -336,8 +340,10 @@ ScAddrVector MessageTopicClassifier::processEntities(
       ScAddr const & entityRoleLink =
           entityTemplateResult[0][MessageClassificationAliasConstants::ENTITY_ROLE_LINK_ALIAS];
 
-      std::string entityWitAiIdtf = utils::CommonUtils::getLinkContent(context, entityLink);
-      std::string const & entityRoleWitAiIdtf = utils::CommonUtils::getLinkContent(context, entityRoleLink);
+      std::string entityWitAiIdtf;
+      context->GetLinkContent(entityLink, entityWitAiIdtf);
+      std::string entityRoleWitAiIdtf;
+      context->GetLinkContent(entityRoleLink, entityRoleWitAiIdtf);
       std::string entitiesKey = entityWitAiIdtf.append(":").append(entityRoleWitAiIdtf);
 
       ScIterator3Ptr const entityClassIterator =

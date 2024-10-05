@@ -87,13 +87,15 @@ TEST_F(MessageProcessingAgentTest, generateAnswerWithSingleWordTest1)
   EXPECT_TRUE(answerAddr.IsValid());
 
   ScAddr answerLink = utils::IteratorUtils::getAnyFromSet(&ctx, answerAddr);
-  EXPECT_EQ(utils::CommonUtils::getLinkContent(&ctx, answerLink), "Апельсин");
+  std::string content;
+  ctx.GetLinkContent(answerLink, content);
+  EXPECT_EQ(content, "Апельсин");
 
   shutdown();
 }
 
 TEST_F(MessageProcessingAgentTest, generateAnswerWithSingleWordTest2)
-{
+{ 
   ScMemoryContext & ctx = *m_ctx;
 
   loader.loadScsFile(ctx, TEST_FILES_DIR_PATH + "generateAnswerWithSingleWordTest2.scs");
@@ -112,7 +114,9 @@ TEST_F(MessageProcessingAgentTest, generateAnswerWithSingleWordTest2)
   EXPECT_TRUE(answerAddr.IsValid());
 
   ScAddr answerLink = utils::IteratorUtils::getAnyFromSet(&ctx, answerAddr);
-  EXPECT_EQ(utils::CommonUtils::getLinkContent(&ctx, answerLink), "Мандарин");
+  std::string content;
+  ctx.GetLinkContent(answerLink, content);
+  EXPECT_EQ(content, "Мандарин");
 
   shutdown();
 }
@@ -137,7 +141,9 @@ TEST_F(MessageProcessingAgentTest, generateAnswerWithSeveralWordsTest)
   EXPECT_TRUE(answerAddr.IsValid());
 
   ScAddr answerLink = utils::IteratorUtils::getAnyFromSet(&ctx, answerAddr);
-  EXPECT_EQ(utils::CommonUtils::getLinkContent(&ctx, answerLink), "Ананас, Апельсин");
+  std::string content;
+  ctx.GetLinkContent(answerLink, content);
+  EXPECT_EQ(content, "Ананас, Апельсин");
 
   shutdown();
 }
@@ -162,7 +168,9 @@ TEST_F(MessageProcessingAgentTest, generateAnswerWithoutWords)
   EXPECT_TRUE(answerAddr.IsValid());
 
   ScAddr answerLink = utils::IteratorUtils::getAnyFromSet(&ctx, answerAddr);
-  EXPECT_EQ(utils::CommonUtils::getLinkContent(&ctx, answerLink), "Таких слов нет");
+  std::string content;
+  ctx.GetLinkContent(answerLink, content);
+  EXPECT_EQ(content, "Таких слов нет");
 
   shutdown();
 }

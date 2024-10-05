@@ -45,7 +45,7 @@ SC_AGENT_IMPLEMENTATION(ChangeInterfaceColorAgent)
   }
   else
   {
-    ms_context->GetLinkContent(componentColorAddr, componentColor);
+    m_memoryCtx.GetLinkContent(componentColorAddr, componentColor);
     SC_LOG_DEBUG("ChangeInterfaceColorAgent: component color is changed to " << componentColor);
   }
 
@@ -92,7 +92,7 @@ bool ChangeInterfaceColorAgent::setComponentColor(ScAddr const & componentAddr, 
   }
   if (componentElementColorLink.IsValid())
   {
-    ms_context->SetLinkContent(componentElementColorLink, componentColor);
+    m_memoryCtx.SetLinkContent(componentElementColorLink, componentColor);
     result = true;
   }
 

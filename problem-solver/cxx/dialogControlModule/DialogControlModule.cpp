@@ -15,7 +15,7 @@ sc_result DialogControlModule::InitializeImpl()
     return SC_RESULT_ERROR;
   }
 
-  ScMemoryContext ctx(sc_access_lvl_make_min, "dialogControlModule");
+  ScMemoryContext ctx;
   if (ActionUtils::isActionDeactivated(&ctx, MessageKeynodes::action_phrase_generation))
   {
     SC_LOG_DEBUG("action_phrase_generation is deactivated");

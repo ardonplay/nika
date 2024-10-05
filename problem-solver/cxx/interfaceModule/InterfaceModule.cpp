@@ -11,7 +11,7 @@ sc_result InterfaceModule::InitializeImpl()
     return SC_RESULT_ERROR;
   }
 
-  ScMemoryContext ctx(sc_access_lvl_make_min, "InterfaceModule");
+  ScMemoryContext ctx;
   if (ActionUtils::isActionDeactivated(&ctx, InterfaceKeynodes::action_change_interface))
   {
     SC_LOG_ERROR("action_change_interface is deactivated");

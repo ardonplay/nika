@@ -70,7 +70,7 @@ SC_AGENT_IMPLEMENTATION(MessageReplyAgent)
     return SC_RESULT_ERROR;
   }
   ScAddrVector argsVector = {processingProgramAddr, generateNonAtomicActionArgsSet(messageAddr)};
-  ScAddr actionToInterpret = utils::AgentUtils::initAgent(
+  ScAddr actionToInterpret = utils::AgentUtils::initAction(
       &m_memoryCtx, commonModule::Keynodes::action_interpret_non_atomic_action, argsVector);
   ScAddr answerAddr;
   if (!waitForActionSuccessfulFinish(actionToInterpret))
@@ -85,7 +85,7 @@ SC_AGENT_IMPLEMENTATION(MessageReplyAgent)
     answerAddr = generateAnswer(messageAddr);
 
     ScTemplate replySearchTemplate;
-    replySearchTemplate.TripleWithRelation(
+    replySearchTemplate.Quintuple(
         messageAddr,
         ScType::EdgeDCommonVar,
         ScType::NodeVar >> "_reply_message",
@@ -108,7 +108,9 @@ SC_AGENT_IMPLEMENTATION(MessageReplyAgent)
   }
 
   SC_LOG_DEBUG("MessageReplyAgent finished");
-  utils::AgentUtils::finishAgentWork(&m_memoryCtx, actionAddr, answerAddr, true);
+  ScAddr edgeToAnswer = m_memoryCtx.CreateEdge(ScType::EdgeDCommonConst, actionAddr, answerAddr);
+  m_memoryCtx.CreateEdge(ScType::EdgeAccessConstPosPerm, CoreKeynodes::nrel_answer, edgeToAnswer);
+  utils::AgentUtils::finishAgentWork(&m_memoryCtx, actionAddr, true);
   return SC_RESULT_OK;
 }
 
@@ -131,13 +133,13 @@ ScAddr MessageReplyAgent::generateMessage(ScAddr const & authorAddr, ScAddr cons
   ScTemplate userMessageTemplate;
   userMessageTemplate.Triple(
       MessageReplyKeynodes::concept_message, ScType::EdgeAccessVarPosPerm, ScType::NodeVar >> USER_MESSAGE_ALIAS);
-  userMessageTemplate.TripleWithRelation(
+  userMessageTemplate.Quintuple(
       USER_MESSAGE_ALIAS,
       ScType::EdgeDCommonVar,
       authorAddr,
       ScType::EdgeAccessVarPosPerm,
       MessageReplyKeynodes::nrel_authors);
-  userMessageTemplate.TripleWithRelation(
+  userMessageTemplate.Quintuple(
       ScType::NodeVar >> TRANSLATION_NODE_ALIAS,
       ScType::EdgeDCommonVar,
       USER_MESSAGE_ALIAS,
@@ -157,7 +159,7 @@ ScAddr MessageReplyAgent::generateNonAtomicActionArgsSet(ScAddr const & messageA
   std::string const ARGS_SET_ALIAS = "_args_set";
 
   ScTemplate argsSetTemplate;
-  argsSetTemplate.TripleWithRelation(
+  argsSetTemplate.Quintuple(
       ScType::NodeVar >> ARGS_SET_ALIAS,
       ScType::EdgeAccessVarPosPerm,
       messageAddr,
@@ -179,7 +181,7 @@ ScAddr MessageReplyAgent::generateAnswer(ScAddr const & messageAddr)
   std::string const ANSWER_ALIAS = "_answer";
 
   ScTemplate replySearchTemplate;
-  replySearchTemplate.TripleWithRelation(
+  replySearchTemplate.Quintuple(
       messageAddr,
       ScType::EdgeDCommonVar >> REPLY_MESSAGE_RELATION_PAIR_ARC_ALIAS,
       ScType::NodeVar >> REPLY_MESSAGE_ALIAS,

@@ -11,7 +11,7 @@ sc_result MessageProcessingModule::InitializeImpl()
     return SC_RESULT_ERROR;
 
   // Регистрация агентов модуля
-  ScMemoryContext ctx(sc_access_lvl_make_min, "MessageProcessingModule");
+  ScMemoryContext ctx;
   if (ActionUtils::isActionDeactivated(&ctx, MessageProcessingKeynodes::action_find_word_in_set_by_first_letter))
   {
     SC_LOG_ERROR("action_letter_search is deactivated");

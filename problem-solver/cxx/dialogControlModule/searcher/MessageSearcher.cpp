@@ -19,13 +19,13 @@ ScAddr MessageSearcher::getFirstMessage(const ScAddr & nonAtomicMessageNode)
   const std::string VAR_TUPLE = "_tuple";
   const std::string VAR_MESSAGE = "_message";
   ScTemplate templ;
-  templ.TripleWithRelation(
+  templ.Quintuple(
       ScType::NodeVarTuple >> VAR_TUPLE,
       ScType::EdgeDCommonVar,
       nonAtomicMessageNode,
       ScType::EdgeAccessVarPosPerm,
       MessageKeynodes::nrel_message_decomposition);
-  templ.TripleWithRelation(
+  templ.Quintuple(
       VAR_TUPLE,
       ScType::EdgeAccessVarPosPerm,
       ScType::NodeVar >> VAR_MESSAGE,
@@ -55,7 +55,7 @@ ScAddr MessageSearcher::getNextMessage(const ScAddr & messageNode)
                     VAR_D_COMMON_EDGE = "_d_common_edge", VAR_MESSAGE = "_message";
   ScTemplate templ;
   templ.Triple(ScType::NodeVarTuple >> VAR_TUPLE, ScType::EdgeAccessVarPosPerm >> VAR_EDGE_1, messageNode);
-  templ.TripleWithRelation(
+  templ.Quintuple(
       VAR_EDGE_1,
       ScType::EdgeDCommonVar >> VAR_D_COMMON_EDGE,
       ScType::EdgeAccessVarPosPerm >> VAR_EDGE_2,
@@ -84,7 +84,7 @@ ScAddr MessageSearcher::getMessageAuthor(const ScAddr & messageNode)
 {
   ScTemplate templ;
   const std::string VAR_AUTHOR = "_author";
-  templ.TripleWithRelation(
+  templ.Quintuple(
       messageNode,
       ScType::EdgeDCommonVar,
       ScType::NodeVar >> VAR_AUTHOR,
@@ -112,7 +112,7 @@ ScAddr MessageSearcher::getMessageTheme(const ScAddr & messageNode)
 {
   ScTemplate templ;
   const std::string VAR_THEME = "_theme";
-  templ.TripleWithRelation(
+  templ.Quintuple(
       messageNode,
       ScType::EdgeAccessVarPosPerm,
       ScType::NodeVar >> VAR_THEME,

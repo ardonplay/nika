@@ -11,7 +11,7 @@ sc_result MessageReplyModule::InitializeImpl()
     return SC_RESULT_ERROR;
   }
 
-  ScMemoryContext ctx(sc_access_lvl_make_min, "MessageReplyModule");
+  ScMemoryContext ctx;
   if (ActionUtils::isActionDeactivated(&ctx, MessageReplyKeynodes::action_reply_to_message))
   {
     SC_LOG_ERROR("action_reply_to_message is deactivated");

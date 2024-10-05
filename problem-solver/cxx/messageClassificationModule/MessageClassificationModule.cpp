@@ -17,7 +17,7 @@ sc_result MessageClassificationModule::InitializeImpl()
   if (!MessageClassificationKeynodes::InitGlobal())
     return SC_RESULT_ERROR;
 
-  ScMemoryContext ctx(sc_access_lvl_make_min, "messageClassificationModule");
+  ScMemoryContext ctx;
   if (ActionUtils::isActionDeactivated(&ctx, MessageClassificationKeynodes::action_message_topic_classification))
     SC_LOG_ERROR("action_message_topic_classification is deactivated");
   else

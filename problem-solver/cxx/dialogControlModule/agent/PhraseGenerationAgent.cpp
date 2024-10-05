@@ -86,7 +86,9 @@ SC_AGENT_IMPLEMENTATION(PhraseGenerationAgent)
   }
   generateSemanticEquivalent(replyMessageNode, templateNode);
 
-  AgentUtils::finishAgentWork(&m_memoryCtx, actionNode, linkResult, true);
+  ScAddr edgeToAnswer = m_memoryCtx.CreateEdge(ScType::EdgeDCommonConst, actionNode, linkResult);
+  m_memoryCtx.CreateEdge(ScType::EdgeAccessConstPosPerm, scAgentsCommon::CoreKeynodes::nrel_answer, edgeToAnswer);
+  AgentUtils::finishAgentWork(&m_memoryCtx, actionNode, true);
   SC_LOG_DEBUG("PhraseGenerationAgent finished");
   return SC_RESULT_OK;
 }
@@ -106,7 +108,8 @@ ScAddr PhraseGenerationAgent::generateLinkByTemplate(
   string textResult;
   ScAddr linkResult;
 
-  string text = CommonUtils::getLinkContent(&m_memoryCtx, textTemplateLink);
+  string text;
+  m_memoryCtx.GetLinkContent(textTemplateLink, text);
   std::map<VariableType, std::vector<std::string>> variables = getTemplateVariables(text);
   if (!variables.empty())
   {
@@ -120,7 +123,9 @@ ScAddr PhraseGenerationAgent::generateLinkByTemplate(
   if (!textResult.empty())
   {
     linkResult = handler.createLink(textResult);
-    SC_LOG_DEBUG("Generated text: \"" + utils::CommonUtils::getLinkContent(&m_memoryCtx, linkResult) + "\"");
+    std::string text;
+    m_memoryCtx.GetLinkContent(linkResult, text);
+    SC_LOG_DEBUG("Generated text: \"" << text << "\"");
   }
 
   return linkResult;
@@ -260,7 +265,7 @@ void PhraseGenerationAgent::generateSemanticEquivalent(const ScAddr & replyMessa
   }
 
   ScTemplate semanticEquivalentStructure;
-  semanticEquivalentStructure.TripleWithRelation(
+  semanticEquivalentStructure.Quintuple(
       replyMessageNode,
       ScType::EdgeDCommonVar,
       semanticEquivalent,
@@ -305,7 +310,8 @@ void PhraseGenerationAgent::replaceLinksVariables(
       break;
     }
     ScAddr link = phraseSemanticResult[variable];
-    string linkValue = utils::CommonUtils::getLinkContent(&m_memoryCtx, link);
+    string linkValue;
+    m_memoryCtx.GetLinkContent(link, linkValue);
     string variableRegular =
           regex_replace(PhraseGenerationAgent::VAR_REGULAR, regex(PhraseGenerationAgent::VAR_CONST), variable);
     text = regex_replace(text, regex(variableRegular), linkValue);
@@ -326,7 +332,7 @@ void PhraseGenerationAgent::replaceSetElementsVariables(
       break;
     }
     ScAddr set = phraseSemanticResult[variable];
-    ScIterator3Ptr const & setElementsIterator = ms_context->Iterator3(set, ScType::EdgeAccessConstPosPerm, ScType::NodeConst);
+    ScIterator3Ptr const & setElementsIterator = m_memoryCtx.Iterator3(set, ScType::EdgeAccessConstPosPerm, ScType::NodeConst);
     if (setElementsIterator->Next())
     {
       setElementsTextStream << CommonUtils::getMainIdtf(&m_memoryCtx, setElementsIterator->Get(2), {scAgentsCommon::CoreKeynodes::lang_ru});
@@ -433,25 +439,25 @@ ScAddrVector PhraseGenerationAgent::getIncidentElements(const ScAddr & node, con
   ScAddrVector buffElements;
 
   ScTemplate templateNode;
-  templateNode.TripleWithRelation(
+  templateNode.Quintuple(
       node, ScType::EdgeDCommonVar >> "_remove_arc_1", ScType::Unknown, ScType::EdgeAccessVarPosPerm, structNode);
   buffElements = ScTemplateUtils::getAllWithKey(&m_memoryCtx, templateNode, "_remove_arc_1");
   incidentElements.insert(incidentElements.end(), buffElements.begin(), buffElements.end());
 
   templateNode.Clear();
-  templateNode.TripleWithRelation(
+  templateNode.Quintuple(
       node, ScType::EdgeAccessVarPosPerm >> "_remove_arc_1", ScType::Unknown, ScType::EdgeAccessVarPosPerm, structNode);
   buffElements = ScTemplateUtils::getAllWithKey(&m_memoryCtx, templateNode, "_remove_arc_1");
   incidentElements.insert(incidentElements.end(), buffElements.begin(), buffElements.end());
 
   templateNode.Clear();
-  templateNode.TripleWithRelation(
+  templateNode.Quintuple(
       ScType::Unknown, ScType::EdgeDCommonVar >> "_remove_arc_1", node, ScType::EdgeAccessVarPosPerm, structNode);
   buffElements = ScTemplateUtils::getAllWithKey(&m_memoryCtx, templateNode, "_remove_arc_1");
   incidentElements.insert(incidentElements.end(), buffElements.begin(), buffElements.end());
 
   templateNode.Clear();
-  templateNode.TripleWithRelation(
+  templateNode.Quintuple(
       ScType::Unknown, ScType::EdgeAccessVarPosPerm >> "_remove_arc_1", node, ScType::EdgeAccessVarPosPerm, structNode);
   buffElements = ScTemplateUtils::getAllWithKey(&m_memoryCtx, templateNode, "_remove_arc_1");
   incidentElements.insert(incidentElements.end(), buffElements.begin(), buffElements.end());

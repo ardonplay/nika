@@ -134,7 +134,8 @@ bool MessageHandler::processNonAtomicMessage(
         ScAddr resultLink = generateLinkByPhrase(replyMessageNode, phraseClassNode, parametersNode, langNode);
         if (resultLink.IsValid())
         {
-          resultText = resultText.append(CommonUtils::getLinkContent(context, resultLink)).append(" ");
+          context->GetLinkContent(resultLink, resultText);
+          resultText = resultText.append(resultText).append(" ");
           messageConstructionsGenerator->generateTextTranslationConstruction(messageNode, resultLink);
           messageNode = messageSearcher->getNextMessage(messageNode);
           phraseClassNode = phraseSearcher->getNextPhraseClass(phraseClassNode);
@@ -186,10 +187,12 @@ ScAddr MessageHandler::generateLinkByPhrase(
     {
       if (phraseLink.IsValid())
       {
+        std::string content;
+        context->GetLinkContent(phraseLink, content);
         SC_LOG_DEBUG(
-            "MessageHandler: the phrase with the content \"" + CommonUtils::getLinkContent(context, phraseLink) +
+            "MessageHandler: the phrase with the content \"" + content +
             "\" is found");
-        ScAddr phraseGenerationActionNode = AgentUtils::initAgent(
+        ScAddr phraseGenerationActionNode = AgentUtils::initAction(
             context, MessageKeynodes::action_phrase_generation, {replyMessageNode, phraseLink, parametersNode});
 
         ActionUtils::waitAction(context, phraseGenerationActionNode, PHRASE_GENERATION_AGENT_WAIT_TIME);
@@ -201,15 +204,19 @@ ScAddr MessageHandler::generateLinkByPhrase(
         {
           resultLink = IteratorUtils::getAnyByOutRelation(
               context, phraseGenerationActionNode, scAgentsCommon::CoreKeynodes::nrel_answer);
+          std::string content;
+          context->GetLinkContent(resultLink, content); 
           SC_LOG_DEBUG(
-              "MessageHandler: the result link with the content \"" + CommonUtils::getLinkContent(context, resultLink) +
+              "MessageHandler: the result link with the content \"" + content +
               "\" is generated");
           break;
         }
         else
         {
+          std::string content;
+          context->GetLinkContent(phraseLink, content); 
           SC_LOG_DEBUG(
-              "MessageHandler: the result link from the phrase \"" + CommonUtils::getLinkContent(context, phraseLink) +
+              "MessageHandler: the result link from the phrase \"" + content +
               "\" isn't generated");
         }
       }
