@@ -1,0 +1,23 @@
+concept_open_source_license
+<- concept_license_type;
+=> nrel_main_idtf:
+   [открытая лицензия]
+   (* <- lang_ru;; *);;
+
+definition->...
+  (*
+   ->rrel_key_sc_element: concept_open_source_license;;
+   <=nrel_sc_text_translation:...
+   (*
+	->[ Открытая лицензия — это тип лицензии, который позволяет доступ к исходному коду программы с возможностью его изменения и распространения в соответствии с условиями лицензии (например, GPL или MIT).]
+   (* <- lang_ru;; *);;
+   *);;
+	=> nrel_main_idtf:
+        	[определение: открытая лицензия]
+        	(* <- lang_ru;; *);;
+    	=>nrel_using_constants:
+    	{
+        	concept_license_type;
+        	concept_open_source_license
+    	};;
+  *);;

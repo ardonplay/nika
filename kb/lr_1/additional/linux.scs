@@ -1,0 +1,11 @@
+linux
+<- concept_os_family;
+=> nrel_main_idtf:
+   [ ЛИНУКС ]
+   (* <- lang_ru;; *);;
+   
+windows
+<- concept_os_family;
+=> nrel_main_idtf:
+   [ винда ]
+   (* <- lang_ru;; *);;

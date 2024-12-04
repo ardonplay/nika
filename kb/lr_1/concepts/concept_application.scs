@@ -1,0 +1,22 @@
+concept_language
+<- sc_node_class;
+=> nrel_main_idtf:
+   [язык программы]
+   (* <- lang_ru;; *);;
+
+definition->...
+  (*
+   ->rrel_key_sc_element: concept_language;;
+   <=nrel_sc_text_translation:...
+   (*
+	->[ язык программы — это язык программирования, на котором она написана, например: Python, Java, C++.]
+   (* <- lang_ru;; *);;
+   *);;
+	=> nrel_main_idtf:
+        	[определение: язык программы]
+        	(* <- lang_ru;; *);;
+    	=>nrel_using_constants:
+    	{
+        	concept_language
+    	};;
+  *);;

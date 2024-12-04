@@ -1,0 +1,35 @@
+concept_application
+<- concept_os;
+=> nrel_main_idtf:
+   [программа]
+   (* <- lang_ru;; *);
+=> nrel_type: software (*<-concept_type;;*);
+=> nrel_functionality: multi (*<-concept_functionality;;*);
+=> nrel_complexity: moderate (*<-concept_complexity;;*);
+=> nrel_platform: cross_platform (*<-concept_platform;;*);
+=> nrel_language: diverse (*<-concept_language;;*);
+=> nrel_interactivity: high (*<-concept_interactivity;;*);
+=> nrel_development_stage: mature (*<-concept_development_stage;;*);
+=> nrel_usage_sphere: information_technology (*<-concept_usage_sphere;;*);
+=> nrel_support: available (*<-concept_support;;*);
+=> nrel_distribution: online (*<-concept_distribution;;*);
+=> nrel_license: varied (*<-concept_license;;*);
+=> nrel_target_audience: general (*<-concept_target_audience;;*);;
+
+definition->...
+  (*
+   ->rrel_key_sc_element: concept_application;;
+   <=nrel_sc_text_translation:...
+   (*
+	->[ программа — это последовательность инструкций, предназначенная для выполнения определённых задач компьютером или другим устройством. ]
+   (* <- lang_ru;; *);;
+   *);;
+	=> nrel_main_idtf:
+        	[определение: программа]
+        	(* <- lang_ru;; *);;
+    	=>nrel_using_constants:
+    	{
+        	concept_os;
+        	concept_application
+    	};;
+  *);;

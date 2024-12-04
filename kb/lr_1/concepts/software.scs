@@ -1,0 +1,22 @@
+software
+<- sc_node_class;
+=> nrel_main_idtf:
+   [программное обеспечение]
+   (* <- lang_ru;; *);;
+
+definition->...
+  (*
+   ->rrel_key_sc_element: software;;
+   <=nrel_sc_text_translation:...
+   (*
+	->[ программное обеспечение (ПО) — это совокупность программ и данных, предназначенных для выполнения определённых задач компьютером или другим устройством. ]
+   (* <- lang_ru;; *);;
+   *);;
+	=> nrel_main_idtf:
+        	[определение: программное обеспечение]
+        	(* <- lang_ru;; *);;
+    	=>nrel_using_constants:
+    	{
+        	software
+    	};;
+  *);;

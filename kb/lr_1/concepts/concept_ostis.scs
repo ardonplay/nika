@@ -1,0 +1,10 @@
+concept_ostis
+<- sc_node_class;
+
+=> nrel_main_idtf:
+   [остис]
+   (* <- lang_ru;; *);;
+
+
+
+concept_ostis => nrel_note: [Это база, база коммунистов в антарктиде...](* <- lang_ru;; *);;

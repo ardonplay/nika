@@ -1,0 +1,22 @@
+concept_complexity
+<- sc_node_class;
+=> nrel_main_idtf:
+   [сложность программы]
+   (* <- lang_ru;; *);;
+
+definition->...
+  (*
+   ->rrel_key_sc_element: concept_complexity;;
+   <=nrel_sc_text_translation:...
+   (*
+	->[ сложность программы характеризуется степенью её внутренней архитектуры, включающей количество модулей, алгоритмов и их взаимодействий.]
+   (* <- lang_ru;; *);;
+   *);;
+	=> nrel_main_idtf:
+        	[определение: сложность программы]
+        	(* <- lang_ru;; *);;
+    	=>nrel_using_constants:
+    	{
+        	concept_complexity
+    	};;
+  *);;

@@ -1,0 +1,22 @@
+concept_proprietary_license
+<- concept_license_type;
+=> nrel_main_idtf:
+   [проприетарная лицензия]
+   (* <- lang_ru;; *);;
+
+definition->...
+  (*
+   ->rrel_key_sc_element: concept_proprietary_license;;
+   <=nrel_sc_text_translation:...
+   (*
+	->[ Проприетарная лицензия — это тип лицензии, при которой программное обеспечение распространяется с закрытым исходным кодом и строгими ограничениями на модификацию и распространение.]
+   (* <- lang_ru;; *);;
+   *);;
+	=> nrel_main_idtf:
+        	[определение: проприетарная лицензия]
+        	(* <- lang_ru;; *);;
+    	=>nrel_using_constants:
+    	{
+        	concept_license
+    	};;
+  *);;

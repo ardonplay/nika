@@ -1,0 +1,19 @@
+concept_ubuntu
+<- concept_os;
+=> nrel_main_idtf:
+   [Ubuntu]
+   (* <- lang_ru;; *);
+=> nrel_type: desktop (*<-concept_os_type;;*);
+=> nrel_family: linux (*<-concept_os_family;;*);
+=> nrel_kernel_type: monolithic (*<-concept_kernel_type;;*);
+=> nrel_user_interface: graphical (*<-concept_user_interface;;*);
+=> nrel_architecture: x86_64 (*<-concept_architecture;;*);
+=> nrel_developer: Canonical (*<-concept_organization;;*);
+=> nrel_license: concept_open_source_license (*<-concept_license;;*);
+=> nrel_usage: personal_computer (*<-concept_usage;;*);
+=> nrel_supported_devices: {laptops; desktops; servers} (*<-concept_device;;*);
+=> nrel_main_features: {
+   free_distribution;
+   package_manager_apt;
+   large_community_support
+} (*<-concept_os_features;;*);;

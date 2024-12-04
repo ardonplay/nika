@@ -1,0 +1,26 @@
+concept_message_about_os
+<- sc_node_not_relation;
+=> nrel_main_idtf:
+[сообщение о операционной системе]
+(* <- lang_ru;; *);
+=> nrel_wit_ai_idtf:
+[about_os];
+<- rrel_key_sc_element:
+...
+(*
+=> nrel_main_idtf:
+[Опр. (сообщение о ОС)]
+(* <- lang_ru;; *);;
+<- definition;;
+<= nrel_sc_text_translation:
+...
+(*
+-> rrel_example:
+[Одним из примеров ОС является OS/2]
+(* <- lang_ru;; *);;
+*);;
+<= nrel_using_constants:
+{
+concept_atomic_message
+};;
+*);;

@@ -1,0 +1,22 @@
+concept_usage_sphere
+<- sc_node_class;
+=> nrel_main_idtf:
+   [сфера применения программы]
+   (* <- lang_ru;; *);;
+
+definition->...
+  (*
+   ->rrel_key_sc_element: concept_usage_sphere;;
+   <=nrel_sc_text_translation:...
+   (*
+	->[ сфера применения программы описывает области, в которых она используется, например: образование, развлечения, бизнес, здравоохранение.]
+   (* <- lang_ru;; *);;
+   *);;
+	=> nrel_main_idtf:
+        	[определение: сфера применения программы]
+        	(* <- lang_ru;; *);;
+    	=>nrel_using_constants:
+    	{
+        	concept_usage_sphere
+    	};;
+  *);;

@@ -63,5 +63,11 @@ concept_atomic_message
 		concept_greeting_message
 	};
 	{
+		concept_message_about_ostis;
+		concept_message_about_os;
+		concept_message_about_ubuntu;
+		concept_message_about_platform
+	};
+	{
 		concept_message_no_class
 	};;

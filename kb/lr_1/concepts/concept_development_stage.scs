@@ -1,0 +1,22 @@
+concept_development_stage
+<- sc_node_class;
+=> nrel_main_idtf:
+   [этап разработки программы]
+   (* <- lang_ru;; *);;
+
+definition->...
+  (*
+   ->rrel_key_sc_element: concept_development_stage;;
+   <=nrel_sc_text_translation:...
+   (*
+	->[ этап разработки программы определяет стадию её готовности, например: проектирование, тестирование, выпуск или поддержка. ]
+   (* <- lang_ru;; *);;
+   *);;
+	=> nrel_main_idtf:
+        	[определение: этап разработки программы]
+        	(* <- lang_ru;; *);;
+    	=>nrel_using_constants:
+    	{
+        	concept_development_stage
+    	};;
+  *);;

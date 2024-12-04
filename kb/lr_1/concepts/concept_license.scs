@@ -1,0 +1,22 @@
+concept_license
+<- sc_node_class;
+=> nrel_main_idtf:
+   [лицензия программы]
+   (* <- lang_ru;; *);;
+
+definition->...
+  (*
+   ->rrel_key_sc_element: concept_license;;
+   <=nrel_sc_text_translation:...
+   (*
+	->[ лицензия программы определяет условия её использования, например: проприетарная, свободная или открытая лицензия. ]
+   (* <- lang_ru;; *);;
+   *);;
+	=> nrel_main_idtf:
+        	[определение: лицензия программы]
+        	(* <- lang_ru;; *);;
+    	=>nrel_using_constants:
+    	{
+        	concept_license
+    	};;
+  *);;

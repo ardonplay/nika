@@ -1,0 +1,22 @@
+concept_type
+<- sc_node_class;
+=> nrel_main_idtf:
+   [тип программы]
+   (* <- lang_ru;; *);;
+
+definition->...
+  (*
+   ->rrel_key_sc_element: concept_type;;
+   <=nrel_sc_text_translation:...
+   (*
+	->[ тип программы определяет её назначение и характер взаимодействия с пользователем, например, это может быть системное, прикладное или серверное ПО.]
+   (* <- lang_ru;; *);;
+   *);;
+	=> nrel_main_idtf:
+        	[определение: тип программы]
+        	(* <- lang_ru;; *);;
+    	=>nrel_using_constants:
+    	{
+        	concept_type
+    	};;
+  *);;
